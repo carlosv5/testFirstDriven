@@ -1,5 +1,6 @@
 package klondike.models;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -12,17 +13,15 @@ import klondike.models.builders.CardBuilder;
 import klondike.models.builders.FilledFoundationBuilder;
 import klondike.models.builders.FoundationBuilder;
 
-public class FoundationTest extends CardStackTest {
+public class FoundationTest {
 
 	private Suit suit = Suit.PIKES;
 	
-	@Override
-	protected CardStack createCardStack() {
+	private Foundation createFoundation() {
 		return new FoundationBuilder().suit(this.suit).build();
 	}
 	
-	@Override
-	protected List<Card> getCards(){
+	private List<Card> getCards(){
 		List<Card> cards = new ArrayList<Card>();
 		cards.add(new CardBuilder().number(Number.AS).suit(this.suit).facedUp().build());
 		cards.add(new CardBuilder().number(Number.TWO).suit(this.suit).facedUp().build());
@@ -81,6 +80,51 @@ public class FoundationTest extends CardStackTest {
 				card(this.getCards().get(0)).
 				card(this.getCards().get(1)).build();
 		return foundation;
+	}
+
+	@Test
+	public void testEmptyWithEmpty() {
+		Foundation foundation = this.createFoundation();
+		assertTrue(foundation.empty());
+	}
+
+	@Test
+	public void testEmptyWithNotEmpty() {
+		Foundation foundation = this.createFoundation();
+		foundation.push(this.getCards().get(0));
+		assertFalse(foundation.empty());
+	}
+
+	@Test
+	public void testPushWithEmpty() {
+		Foundation foundation = this.createFoundation();
+		foundation.push(this.getCards().get(0));
+		assertEquals(this.getCards().get(0), foundation.peek());
+	}
+
+	@Test
+	public void testPushWithNotEmpty() {
+		Foundation foundation = this.createFoundation();
+		foundation.push(this.getCards().get(0));
+		foundation.push(this.getCards().get(1));
+		assertEquals(this.getCards().get(1), foundation.peek());
+	}
+
+	@Test
+	public void testPopEmpty() {
+		Foundation foundation = this.createFoundation();
+		foundation.push(this.getCards().get(0));
+		assertEquals(this.getCards().get(0), foundation.pop());
+		assertTrue(foundation.empty());
+	}
+
+	@Test
+	public void testPopNotEmpty() {
+		Foundation foundation = this.createFoundation();
+		foundation.push(this.getCards().get(0));
+		foundation.push(this.getCards().get(1));
+		assertEquals(this.getCards().get(1), foundation.pop());
+		assertEquals(this.getCards().get(0), foundation.peek());
 	}
 
 }
