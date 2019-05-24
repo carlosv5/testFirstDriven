@@ -13,15 +13,13 @@ import klondike.models.builders.CardBuilder;
 import klondike.models.builders.CardListBuilder;
 import klondike.models.builders.PileBuilder;
 
-public class PileTest extends CardStackTest {
+public class PileTest {
 
-	@Override
-	protected CardStack createCardStack() {
+	private Pile createPile() {
 		return new PileBuilder().build();
 	}
 
-	@Override
-	protected List<Card> getCards() {
+	private List<Card> getCards() {
 		List<Card> cards = new ArrayList<Card>();
 		cards.add(new CardBuilder().number(Number.KING).suit(Suit.CLOVERS).facedUp().build());
 		cards.add(new CardBuilder().number(Number.QUEEN).suit(Suit.DIAMONDS).facedUp().build());
@@ -100,6 +98,51 @@ public class PileTest extends CardStackTest {
 		pile.removeTop(4);
 		assertTrue(pile.pop().isFacedUp());
 		assertTrue(pile.empty());
+	}
+
+	@Test
+	public void testEmptyWithEmpty() {
+		Pile waste = this.createPile();
+		assertTrue(waste.empty());
+	}
+
+	@Test
+	public void testEmptyWithNotEmpty() {
+		Pile waste = this.createPile();
+		waste.push(this.getCards().get(0));
+		assertFalse(waste.empty());
+	}
+
+	@Test
+	public void testPushWithEmpty() {
+		Pile waste = this.createPile();
+		waste.push(this.getCards().get(0));
+		assertEquals(this.getCards().get(0), waste.peek());
+	}
+
+	@Test
+	public void testPushWithNotEmpty() {
+		Pile waste = this.createPile();
+		waste.push(this.getCards().get(0));
+		waste.push(this.getCards().get(1));
+		assertEquals(this.getCards().get(1), waste.peek());
+	}
+
+	@Test
+	public void testPopEmpty() {
+		Pile waste = this.createPile();
+		waste.push(this.getCards().get(0));
+		assertEquals(this.getCards().get(0), waste.pop());
+		assertTrue(waste.empty());
+	}
+
+	@Test
+	public void testPopNotEmpty() {
+		Pile waste = this.createPile();
+		waste.push(this.getCards().get(0));
+		waste.push(this.getCards().get(1));
+		assertEquals(this.getCards().get(1), waste.pop());
+		assertEquals(this.getCards().get(0), waste.peek());
 	}
 
 }
