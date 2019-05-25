@@ -85,7 +85,7 @@ public class Game {
         if (!pile.fitsIn(card)) {
             return Error.NO_FIT_PILE;
         }
-        pile.addToTop(Arrays.asList(this.waste.pop()));
+        pile.push(Arrays.asList(this.waste.pop()));
         return null;
     }
 
@@ -101,7 +101,7 @@ public class Game {
         if (!pile.fitsIn(card)) {
             return Error.NO_FIT_PILE;
         }
-        pile.addToTop(Arrays.asList(foundation.pop()));
+        pile.push(Arrays.asList(foundation.pop()));
         return null;
     }
 
@@ -113,12 +113,12 @@ public class Game {
         if (pile.empty()) {
             return Error.EMPTY_PILE;
         }
-        Card card = pile.getTop(1).get(0);
+        Card card = pile.peek(1).get(0);
         if (!foundation.fitsIn(card)) {
             return Error.NO_FIT_FOUNDATION;
         }
         foundation.push(card);
-        pile.removeTop(1);
+        pile.pop(1);
         return null;
     }
 
@@ -134,12 +134,12 @@ public class Game {
         if (originPile.numberOfFaceUpCards() < numberOfCards) {
             return Error.NO_ENOUGH_CARDS_PILE;
         }
-        List<Card> cards = originPile.getTop(numberOfCards);
+        List<Card> cards = originPile.peek(numberOfCards);
         if (!destinationPile.fitsIn(cards.get(cards.size() - 1))) {
             return Error.NO_FIT_PILE;
         }
-        originPile.removeTop(numberOfCards);
-        destinationPile.addToTop(cards);
+        originPile.pop(numberOfCards);
+        destinationPile.push(cards);
         return null;
     }
 

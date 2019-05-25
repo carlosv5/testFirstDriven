@@ -46,7 +46,7 @@ public class PileTest {
 	@Test(expected = AssertionError.class)
 	public void testGetTopOneWrongIsNotFaceUp() {
 		Pile pile = new PileBuilder().card().card().build();
-		pile.getTop(2);
+		pile.peek(2);
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class PileTest {
 		for (Card card : cards) {
 			pile.push(card);
 		}
-		assertEquals(cards, pile.getTop(cards.size()));
+		assertEquals(cards, pile.peek(cards.size()));
 	}
 
 	@Test
@@ -83,9 +83,9 @@ public class PileTest {
 				.card(new CardBuilder().number(Number.NINE).suit(Suit.CLOVERS).facedUp().build())
 				.card(new CardBuilder().number(Number.EIGHT).suit(Suit.DIAMONDS).facedUp().build())
 				.card(new CardBuilder().number(Number.SEVEN).suit(Suit.PIKES).facedUp().build()).build();
-		pile.addToTop(cards);
+		pile.push(cards);
 		cards.add(0, topCard);
-		assertEquals(cards, pile.getTop(cards.size()));
+		assertEquals(cards, pile.peek(cards.size()));
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class PileTest {
 		pile.push(new CardBuilder().number(Number.NINE).suit(Suit.CLOVERS).facedUp().build());
 		pile.push(new CardBuilder().number(Number.EIGHT).suit(Suit.DIAMONDS).facedUp().build());
 		pile.push(new CardBuilder().number(Number.SEVEN).suit(Suit.PIKES).facedUp().build());
-		pile.removeTop(4);
+		pile.pop(4);
 		assertTrue(pile.pop().isFacedUp());
 		assertTrue(pile.empty());
 	}
