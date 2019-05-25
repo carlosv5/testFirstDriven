@@ -61,14 +61,14 @@ public class StockTest {
 	}
 	
 	@Test
-	public void testTakeTopOne(){
+	public void testPopOne(){
 		Stock stock = new Stock();
 		List<Card> cardList = stock.pop(1);
 		assertEquals(1, cardList.size());
 	}
 	
 	@Test
-	public void testTakeTopAll(){
+	public void testTakePopAll(){
 		Stock stock = new Stock();
 		List<Card> cardList = stock.pop(StockTest.NUMBER_CARDS);
 		assertEquals(StockTest.NUMBER_CARDS, cardList.size());
