@@ -105,7 +105,7 @@ public class GameTest {
 	}
 
 	private Card setWaste(Game game, Number number) {
-		Card card = new CardBuilder().number(number).suit(Suit.PIKES).build();
+		Card card = new CardBuilder().number(number).suit(Suit.PIKES).facedUp().build();
 		game.getWaste().push(card);
 		return card;
 	}

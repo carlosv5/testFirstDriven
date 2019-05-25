@@ -23,6 +23,8 @@ public class Waste {
 	}
 
 	public void push(Card card) {
+		assert card.isFacedUp();
 		this.cards.push(card);
 	}
+
 }
